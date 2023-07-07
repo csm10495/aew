@@ -1,15 +1,13 @@
 import pathlib
-import sys
 from datetime import date
 
 import pytest
 from bs4 import BeautifulSoup
 
+from aew import AEW, Post
+
 HTML_DIR = (pathlib.Path(__file__).parent / "html").resolve()
 SRC_DIR = (pathlib.Path(__file__).parent.parent).resolve()
-
-sys.path.insert(0, str(SRC_DIR))
-from aew import AEW, Post
 
 
 def soup_from_file(filename: str) -> BeautifulSoup:

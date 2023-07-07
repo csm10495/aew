@@ -1,4 +1,5 @@
 import functools
+import logging
 import re
 from dataclasses import dataclass
 
@@ -9,6 +10,8 @@ from dateutil.parser import parse as dateutil_parse
 __version__ = "0.0.1"
 
 URL = "https://www.allelitewrestling.com/blog"
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -80,13 +83,16 @@ class AEW:
 
     def _get_title_from_url(self, url: str) -> str:
         """
-        GETs the given URL and returns the post title via the class: blog-post-title-font
+        GETs the given URL and returns the post title via the class: blog-post-title-font.
+        If that fails, use the end of the URL
         """
         soup = self.get(url)
         for element in soup.find_all("span", {"class": "blog-post-title-font"}):
             return element.text
 
-        raise ValueError(f"Could not find title for {url}")
+        logger.warning(f"Could not find title for {url} in content")
+
+        return url.split("/")[-1].replace("-", " ").title().replace("Aew", "AEW")
 
     def _resize_image_url_to_16x9(self, image_url: str) -> str:
         """

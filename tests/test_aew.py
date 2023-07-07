@@ -83,3 +83,13 @@ MOXLEY HAS SOMETHING TO SAY...
 JERICHO SPEAKS...
 """
     )
+
+
+def test_get_title_from_url_fallback(local_aew):
+    local_aew.get = lambda url: BeautifulSoup()
+    assert (
+        local_aew._get_title_from_url(
+            "https://www.allelitewrestling.com/post/aew-collision2-preview-for-july-1-2023"
+        )
+        == "AEW Collision2 Preview For July 1 2023"
+    )

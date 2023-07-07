@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse as dateutil_parse
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 URL = "https://www.allelitewrestling.com/blog"
 

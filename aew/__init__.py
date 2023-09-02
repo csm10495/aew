@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from dateutil.parser import ParserError
 from dateutil.parser import parse as dateutil_parse
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 URL = "https://www.allelitewrestling.com/blog"
 

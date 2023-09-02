@@ -5,14 +5,22 @@ from dataclasses import dataclass
 
 import requests
 from bs4 import BeautifulSoup
-from dateutil.parser import parse as dateutil_parse
+from dateutil.parser import parse as dateutil_parse, ParserError
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 URL = "https://www.allelitewrestling.com/blog"
 
 logger = logging.getLogger(__name__)
 
+def _date_or_none(date: str) -> str | None:
+    """
+    Returns a date string or None if it fails to parse
+    """
+    try:
+        return dateutil_parse(date).date()
+    except ParserError:
+        return None
 
 @dataclass
 class Post:
@@ -26,10 +34,16 @@ class Post:
         Set the date based off the title having 'for ' in it
 
         For example: AEW Dynamite Preview for July 5, 2023
+        Another case: AEW Rampage - 09/01/23
         """
         self.date = None
         if "for " in self.title:
-            self.date = dateutil_parse(self.title.split("for ")[1]).date()
+            self.date = _date_or_none(self.title.split("for ")[1])
+
+        if self.date is None and " - " in self.title:
+            self.date = _date_or_none(self.title.split(" - ")[1])
+
+
 
     def get_strong_text(self) -> str:
         """

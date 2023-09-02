@@ -2,20 +2,21 @@ import functools
 import logging
 import re
 from dataclasses import dataclass
+from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import ParserError
 from dateutil.parser import parse as dateutil_parse
 
-__version__ = "0.0.6"
+__version__ = "0.0.5"
 
 URL = "https://www.allelitewrestling.com/blog"
 
 logger = logging.getLogger(__name__)
 
 
-def _date_or_none(date: str) -> str | None:
+def _date_or_none(date: str) -> Optional[str]:
     """
     Returns a date string or None if it fails to parse
     """

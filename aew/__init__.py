@@ -5,13 +5,15 @@ from dataclasses import dataclass
 
 import requests
 from bs4 import BeautifulSoup
-from dateutil.parser import parse as dateutil_parse, ParserError
+from dateutil.parser import ParserError
+from dateutil.parser import parse as dateutil_parse
 
 __version__ = "0.0.6"
 
 URL = "https://www.allelitewrestling.com/blog"
 
 logger = logging.getLogger(__name__)
+
 
 def _date_or_none(date: str) -> str | None:
     """
@@ -21,6 +23,7 @@ def _date_or_none(date: str) -> str | None:
         return dateutil_parse(date).date()
     except ParserError:
         return None
+
 
 @dataclass
 class Post:
@@ -42,8 +45,6 @@ class Post:
 
         if self.date is None and " - " in self.title:
             self.date = _date_or_none(self.title.split(" - ")[1])
-
-
 
     def get_strong_text(self) -> str:
         """

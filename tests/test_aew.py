@@ -15,8 +15,8 @@ def soup_from_file(filename: str) -> BeautifulSoup:
 
 
 def test_date_or_none():
-    assert _date_or_none('lolcats') is None
-    assert _date_or_none('July 5, 2023') == date(2023, 7, 5)
+    assert _date_or_none("lolcats") is None
+    assert _date_or_none("July 5, 2023") == date(2023, 7, 5)
 
 
 @pytest.fixture(scope="function")
@@ -99,6 +99,18 @@ def test_get_title_from_url_fallback(local_aew):
 
 
 def test_post_post_init_sets_date():
-    Post(url=None, title="AEW Dynamite Preview for July 5, 2023", image_url=None, aew=None).date == date(2023, 7, 5)
-    Post(url=None, title="AEW Fight For The Fallen Preview 2023", image_url=None, aew=None).date is None
-    Post(url=None, title="AEW Rampage - 09/01/23", image_url=None, aew=None).date == date(2023, 9, 1)
+    Post(
+        url=None,
+        title="AEW Dynamite Preview for July 5, 2023",
+        image_url=None,
+        aew=None,
+    ).date == date(2023, 7, 5)
+    Post(
+        url=None,
+        title="AEW Fight For The Fallen Preview 2023",
+        image_url=None,
+        aew=None,
+    ).date is None
+    Post(
+        url=None, title="AEW Rampage - 09/01/23", image_url=None, aew=None
+    ).date == date(2023, 9, 1)
